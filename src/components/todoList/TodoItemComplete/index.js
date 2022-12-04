@@ -30,12 +30,13 @@ export default function TodoItemComplete(props) {
                     <br></br>
                     <input type="file" required="required" onChange={handlePhotoChange}/>
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button className="todoListCompleteSubmit" variant="primary" type="submit">
                     Submit
                 </Button>
-                <Button variant="primary" onClick={handleTodoItemCancelBtnClick}>
+                <Button className="todoListCompleteCancel" variant="primary" onClick={handleTodoItemCancelBtnClick}>
                     Cancel
                 </Button>
+                {/* <button className="btn1">test</button> */}
             </Form>
         </div>
     )

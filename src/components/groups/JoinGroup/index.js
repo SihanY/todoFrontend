@@ -11,6 +11,8 @@ export default function JoinGroup(props) {
         setJoinPoints(e.target.value);
     }
 
+    
+
     const {handleJoinGroupSubmitBtnClick, handleJoinGroupCancelBtnClick} = props
 
     return (
