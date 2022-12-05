@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import GroupItem from '../../components/groups/GroupItem'
-import SearchBar from '../../components/groups/SearchBar'
-import JoinGroup from '../../components/groups/JoinGroup'
-import './index.css'
+import GroupItem from '../../components/groups/GroupItem';
+import SearchBar from '../../components/groups/SearchBar';
+import JoinGroup from '../../components/groups/JoinGroup';
+import CreateGroup from '../../components/groups/CreateGroup';
+import './index.css';
 
-function Groups (){
-
+function Groups () {
+    const [showCreateGroup, setShowCreateGroup] = useState(false);
 
     const [showJoinGroup, setShowJoinGroup] = useState(false);
-    const [selectedGroup, setSelectedGroup] = useState({ID: ""});
+    const [selectedGroup, setSelectedGroup] = useState({ ID: "" });
     const [keyWord, setKeyWord] = useState("");
 
     //items should be got from back-end daabase
@@ -86,24 +87,41 @@ function Groups (){
 
     const handleSearchBarClick = (content) => {
         setKeyWord(content);
-    }
+    };
+    //Create Group
+    const handleCreateBtnClick = () => {
+        setShowCreateGroup(!showCreateGroup);
+    };
+    const handleCreateGroupCancelBtnClick = () => {
+        setShowCreateGroup(false);
+    };
+    const handleCreateGroupSubmitBtnClick = (e) => {
+        e.preventDefault();
+        /* setShowJoinGroup(false);
+        setSelectedGroup({ ID: selectedGroup.ID });
+        //send message here, userID, joined one group, join points
+        console.log(selectedGroup);
+        console.log(joinPoints); */
+    };
+
+    //Join Group
     const handleJoinBtnClick = (itemID) => {
         setShowJoinGroup(true);
-        setSelectedGroup({ID: itemID});
-    }
+        setSelectedGroup({ ID: itemID });
+    };
 
     const handleJoinGroupCancelBtnClick = () => {
         setShowJoinGroup(false);
-    }
+    };
 
     const handleJoinGroupSubmitBtnClick = (e, joinPoints) => {
         e.preventDefault();
         setShowJoinGroup(false);
-        setSelectedGroup({ID: selectedGroup.ID});
+        setSelectedGroup({ ID: selectedGroup.ID });
         //send message here, userID, joined one group, join points
         console.log(selectedGroup);
         console.log(joinPoints);
-    }
+    };
     useEffect(() => {
         console.log(keyWord);
     });
@@ -111,22 +129,30 @@ function Groups (){
     return (
         <div className="groupPage">
             {
-                showJoinGroup === true ? <JoinGroup className="joinGroup" handleJoinGroupSubmitBtnClick={handleJoinGroupSubmitBtnClick} handleJoinGroupCancelBtnClick={handleJoinGroupCancelBtnClick}></JoinGroup> : null
+                showJoinGroup === true ? <JoinGroup className="joinGroup"
+                    handleJoinGroupSubmitBtnClick={handleJoinGroupSubmitBtnClick}
+                    handleJoinGroupCancelBtnClick={handleJoinGroupCancelBtnClick}></JoinGroup> : null
+            }
+            {
+                showCreateGroup === true ? <CreateGroup className="createGroup"
+                    handleCreateGroupSubmitBtnClick={handleCreateGroupSubmitBtnClick}
+                    handleCreateGroupCancelBtnClick={handleCreateGroupCancelBtnClick}></CreateGroup> : null
             }
             <div className="groupHead">
                 <div className="searchBarBox">
                     <SearchBar className="groupSearchBar" handleSearchBarClick={handleSearchBarClick}></SearchBar>
                 </div>
                 <div className="createBox">
-                    <button className="createGroupBtn">Create</button>
+                    <button className="createGroupBtn" onClick={handleCreateBtnClick}>Create</button>
+
                 </div>
-                
+
             </div>
             <div className="groupList">
                 {allGroups.map(group => ((keyWord.length === 0 || group.ID.indexOf(keyWord) >= 0 || group.title.indexOf(keyWord) >= 0 || group.description.indexOf(keyWord) >= 0) === true ? <GroupItem handleJoinBtnClick={handleJoinBtnClick} item={group}></GroupItem> : null))}
             </div>
         </div>
-    )
+    );
 }
 
 export default Groups;
