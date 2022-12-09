@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import TotoItem from '../../components/todoList/TodoItem'
-import TodoItemComplete from '../../components/todoList/TodoItemComplete'
-import './index.css'
+import React, { useState } from 'react';
+import TotoItem from '../../components/todoList/TodoItem';
+import TodoItemComplete from '../../components/todoList/TodoItemComplete';
+import './index.css';
 
-function TodoList (){
+function TodoList () {
 
     const [showTodoItemComplete, setShowTodoItemComplete] = useState(false);
-    const [selectedItem, setSelectedItem] = useState({ID: -1, completed: false});
+    const [selectedItem, setSelectedItem] = useState({ ID: -1, completed: false });
 
     //items should be got from back-end daabase
     const items = [
@@ -54,22 +54,22 @@ function TodoList (){
 
     const handleTodoItemCompleteBtnClick = (itemID) => {
         setShowTodoItemComplete(true);
-        setSelectedItem({ID: itemID, completed: false});
-    }
+        setSelectedItem({ ID: itemID, completed: false });
+    };
 
     const handleTodoItemCancelBtnClick = () => {
         setShowTodoItemComplete(false);
-    }
+    };
 
     const handleTodoItemSubmitBtnClick = (e, description, photo) => {
         e.preventDefault();
         setShowTodoItemComplete(false);
-        setSelectedItem({ID: selectedItem.ID, completed: true});
+        setSelectedItem({ ID: selectedItem.ID, completed: true });
         //send message here
         console.log(selectedItem);
         console.log(description);
         console.log(photo);
-    }
+    };
 
     return (
         <div className="todoList">
@@ -81,7 +81,7 @@ function TodoList (){
                 items.map(item => (<TotoItem handleTodoItemCompleteBtnClick={handleTodoItemCompleteBtnClick} item={item} selectedItem={selectedItem}></TotoItem>))
             }
         </div>
-    )
+    );
 }
-  
+
 export default TodoList;
